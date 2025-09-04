@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx jest --passWithNoTests && npx playwright test
+npx jest --passWithNoTests && npx playwright test  --headed
