@@ -1,48 +1,51 @@
 import { test, expect } from '@playwright/test';
 
 test('basic test', async ({ page }) => {
-  await page.goto('http://localhost:5173'); // Replace with your app's URL
+  await page.goto('http://localhost:5173');
+  await page.waitForTimeout(3000); // Wait 3 seconds after page load
 
-  // Verify the page title
-  await expect(page).toHaveTitle(/React/); // Replace with your app's title
+  await expect(page).toHaveTitle(/React/); // Adjust title match if needed
+  await page.waitForTimeout(3000); // Wait to observe the title check
 });
 
 test('Login function submits email and password', async ({ page }) => {
-  await page.goto('http://localhost:5173'); // Replace with your app's URL
+  await page.goto('http://localhost:5173');
+  await page.waitForTimeout(3000); // Wait after page load
 
-  // Fill in the email and password fields
   await page.fill('input[placeholder="Email"]', 'test@example.com');
+  await page.waitForTimeout(3000); // Wait after typing email
+
   await page.fill('input[placeholder="Password"]', 'password123');
+  await page.waitForTimeout(3000); // Wait after typing password
 
-  // Click the login button
   await page.click('button:has-text("Login")');
+  await page.waitForTimeout(5000); // Wait after clicking login
 
-  // Log the page content to debug the issue
-  console.log(await page.content());
-
-  // Log the DOM structure after clicking the Login button
+  // Debug output if needed
   console.log('DOM after clicking Login:', await page.content());
 
-  // Wait for the HomePage to render after login using data-testid
+  // Wait for home page after login
   await page.waitForSelector('[data-testid="home-page"]');
+  await expect(page.locator('[data-testid="home-page"]')).toBeVisible();
 
-  // Check if the HomePage content is visible
-  await expect(page.locator('[data-testid="home-page"]')).toBeVisible(); // Replace with actual HomePage content
+  await page.waitForTimeout(5000); // Wait to show HomePage for video
 });
 
 test('Navigate to Home Screen after Login', async ({ page }) => {
-  await page.goto('http://localhost:5173'); // Replace with your app's URL
+  await page.goto('http://localhost:5173');
+  await page.waitForTimeout(3000); // Wait after load
 
-  // Fill in the email and password fields
   await page.fill('input[placeholder="Email"]', 'test@example.com');
+  await page.waitForTimeout(3000); // Wait after email
+
   await page.fill('input[placeholder="Password"]', 'password123');
+  await page.waitForTimeout(3000); // Wait after password
 
-  // Click the login button
   await page.click('button:has-text("Login")');
+  await page.waitForTimeout(5000); // Wait after submit
 
-  // Wait for the HomePage to render after login using data-testid
   await page.waitForSelector('[data-testid="home-page"]');
-
-  // Check if the HomePage content is visible
   await expect(page.locator('[data-testid="home-page"]')).toBeVisible();
+
+  await page.waitForTimeout(5000); // Keep it visible
 });

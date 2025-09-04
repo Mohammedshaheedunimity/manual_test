@@ -10,5 +10,7 @@ export default defineConfig({
   use: {
     ignoreHTTPSErrors: true,
     baseURL: 'http://localhost:5173',
+    headless: false,
+    slowMo: 60000, // Add a 500ms delay between actions
   },
 });
