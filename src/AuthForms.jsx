@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AuthForms.css'; // Ensure the CSS file is imported for styling
+import HomePage from './HomePage';
+import { useNavigate } from 'react-router-dom';
 
 export function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onLogin(email, password);
+    navigate('/home'); // Navigate to the home screen after login
   };
 
   return (
