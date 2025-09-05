@@ -1,6 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
+  headless:true,
   testDir: './playwright-tests',
   webServer: {
     command: 'npm run dev',
