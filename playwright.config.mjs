@@ -1,7 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  headless:true,
   testDir: './playwright-tests',
   webServer: {
     command: 'npm run dev',
@@ -11,7 +10,7 @@ export default defineConfig({
   use: {
     ignoreHTTPSErrors: true,
     baseURL: 'http://localhost:5173',
-    headless: false,
-    slowMo: 60000, // Add a 500ms delay between actions
+    headless: true, // Ensure tests run in headless mode
+    slowMo: 60000, // Add a delay between actions
   },
 });
