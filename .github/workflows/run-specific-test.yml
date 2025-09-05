@@ -34,12 +34,12 @@ jobs:
           COMMIT_MSG="${{ env.msg }}"
           echo "Commit message: $COMMIT_MSG"
 
-          # Extract the test name keyword
+          # Extract the test name keyword from commit message
           if [[ "$COMMIT_MSG" =~ run:([a-zA-Z0-9_-]+) ]]; then
             TEST_NAME="${BASH_REMATCH[1]}"
-            echo "Running test: $TEST_NAME"
-            npx playwright test --grep "$TEST_NAME"
+            echo "Running test matching: $TEST_NAME"
+            npx playwright test --headless --grep "$TEST_NAME"
           else
             echo "No test keyword found. Running all tests."
-            npx playwright test
+            npx playwright test --headless
           fi
