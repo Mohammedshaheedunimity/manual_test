@@ -27,11 +27,11 @@ jobs:
       - name: Get commit message
         id: get_msg
         run: |
-          echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+          echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
 
       - name: Run specific Playwright test
         run: |
-          COMMIT_MSG="${{ steps.get_msg.outputs.msg }}"
+          COMMIT_MSG="${{ env.msg }}"
           echo "Commit message: $COMMIT_MSG"
 
           # Extract the test name keyword
