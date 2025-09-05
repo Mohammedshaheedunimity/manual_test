@@ -42,3 +42,4 @@ jobs:
           else
             echo "No test keyword found. Running all tests."
             npx playwright test
+          fi

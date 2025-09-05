@@ -21,9 +21,6 @@ test('Login function submits email and password', async ({ page }) => {
   await page.click('button:has-text("Login")');
   await page.waitForTimeout(5000); // Wait after clicking login
 
-  // Debug output if needed
-  console.log('DOM after clicking Login:', await page.content());
-
   // Wait for home page after login
   await page.waitForSelector('[data-testid="home-page"]');
   await expect(page.locator('[data-testid="home-page"]')).toBeVisible();
