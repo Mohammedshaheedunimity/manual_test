@@ -6,7 +6,6 @@ import HomePage from './HomePage';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [message, setMessage] = useState('');
-  //hello
 
   const handleLogin = (email, password) => {
     setMessage(`Logged in as ${email}`);
