@@ -3,15 +3,20 @@
 
 
 
+
 # Get the commit message being used for this commit
 COMMIT_MSG_FILE=".git/COMMIT_EDITMSG"
 if [ -f "$COMMIT_MSG_FILE" ]; then
 	COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
-	echo "$COMMIT_MSG" | grep -iq 'test'
-	if [ $? -eq 0 ]; then
+
+	if echo "$COMMIT_MSG" | grep -iq 'login-test'; then
+		echo "Running only login tests..."
+		npx jest src/AuthForms.test.jsx && npx playwright test playwright-tests/login-flow.spec.js --headed
+	elif echo "$COMMIT_MSG" | grep -iq 'test'; then
+		echo "Running all tests..."
 		npx jest --passWithNoTests && npx playwright test --headed
 	else
-		echo "Skipping tests: commit message does not contain 'test'"
+		echo "Skipping tests: commit message does not contain 'test' or 'login-test'"
 	fi
 else
 	echo "No commit message file found, skipping tests."

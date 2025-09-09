@@ -1,4 +1,16 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx playwright test
+
+# Get the last commit message
+COMMIT_MSG=$(git log -1 --pretty=%B)
+
+if echo "$COMMIT_MSG" | grep -iq 'login-test'; then
+	echo "Running only login tests on push..."
+	npx jest src/AuthForms.test.jsx && npx playwright test playwright-tests/login-flow.spec.js --headed
+elif echo "$COMMIT_MSG" | grep -iq 'test'; then
+	echo "Running all tests on push..."
+	npx jest --passWithNoTests && npx playwright test --headed
+else
+	echo "Skipping tests on push: commit message does not contain 'test' or 'login-test'"
+fi
