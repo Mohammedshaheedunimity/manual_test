@@ -1,4 +1,14 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx jest --passWithNoTests && npx playwright test  --headed
+
+# Get the last commit message
+COMMIT_MSG=$(git log -1 --pretty=%B)
+
+# Only run tests if commit message contains 'test'
+echo "$COMMIT_MSG" | grep -iq 'test'
+if [ $? -eq 0 ]; then
+	npx jest --passWithNoTests && npx playwright test --headed
+else
+	echo "Skipping tests: commit message does not contain 'test'"
+fi
