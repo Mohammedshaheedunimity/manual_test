@@ -2,13 +2,17 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 
-# Get the last commit message
-COMMIT_MSG=$(git log -1 --pretty=%B)
 
-# Only run tests if commit message contains 'test'
-echo "$COMMIT_MSG" | grep -iq 'test'
-if [ $? -eq 0 ]; then
-	npx jest --passWithNoTests && npx playwright test --headed
+# Get the commit message being used for this commit
+COMMIT_MSG_FILE=".git/COMMIT_EDITMSG"
+if [ -f "$COMMIT_MSG_FILE" ]; then
+	COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+	echo "$COMMIT_MSG" | grep -iq 'test'
+	if [ $? -eq 0 ]; then
+		npx jest --passWithNoTests && npx playwright test --headed
+	else
+		echo "Skipping tests: commit message does not contain 'test'"
+	fi
 else
-	echo "Skipping tests: commit message does not contain 'test'"
+	echo "No commit message file found, skipping tests."
 fi
